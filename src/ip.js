@@ -1,4 +1,4 @@
-const regexBuilder = require('./util/regexBuilder');
+import * as regexBuilder from './util/regexBuilder';
 
 
 let _startIP = new WeakMap();
@@ -22,7 +22,7 @@ const ipRegex = new RegExp(IP_REGEX);
 const wildcardRegex = new RegExp(WILDCARD_REGEX);
 
 
-module.exports = class IP {
+export default class IP {
 
     get value() {
 

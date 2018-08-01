@@ -18,6 +18,22 @@ try{
 }
 
 try{
+    let ip = new IP('192.0.1.2', '198.179.1.2');
+    console.log(ip.value);
+    console.log(ip.regex);
+} catch (err) {
+    console.log(1, err);
+}
+
+try{
+    let ip = new IP('192.168.1.2', '198.255.1.2');
+    console.log(ip.value);
+    console.log(ip.regex);
+} catch (err) {
+    console.log(1, err);
+}
+
+try{
     let ip = new IP('192.168.0.1');
     console.log(ip.value);
     console.log(ip.regex);
