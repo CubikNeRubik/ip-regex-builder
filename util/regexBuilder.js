@@ -1,6 +1,36 @@
 module.exports = {
-    IpRangeRegex
+    IpRangeRegex,
+    IpWildcardRegex
 };
+
+const BYTE_REGEXP = '([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])';
+
+function IpWildcardRegex(wildcardIP){
+
+    const bytes = wildcardIP.split(".");
+    let regex = '';
+
+    for(let i = 0; i < 4; i++){
+        if(bytes[i] !== '*'){
+
+            if(i > 0){
+                regex += '\\.';
+            }
+            regex += bytes[i];
+
+        } else {
+
+            if(i === 0){
+                regex += `(${BYTE_REGEXP})`;
+                i++;
+            }
+            regex += `(\\.${BYTE_REGEXP}){${4 - i}}`;
+            break;
+        }
+    }
+
+    return regex;
+}
 
 function IpRangeRegex(startIP, endIP){
 

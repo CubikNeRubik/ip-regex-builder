@@ -102,40 +102,17 @@ module.exports = class IP {
         let regex = null;
 
         if(!this.isRange){
-            regex = new RegExp(`^${this.value}$`);
+            regex = this.value;
         } else {
 
-            regex = '';
-            const startIpBytes = _startIP.get(this).split('.');
-
             if(this.isWildcard){
-
-                for(let i = 0; i < 4; i++){
-                    if(startIpBytes[i] !== '*'){
-
-                        if(i > 0){
-                            regex += '\\.';
-                        }
-                        regex += startIpBytes[i];
-
-                    } else {
-
-                        if(i == 0){
-                            regex += `(${BYTE_REGEXP})`;
-                            i++;
-                        }
-                        regex += `(\\.${BYTE_REGEXP}){${4 - i}}`;
-                        break;
-                    }
-                }
+                regex = regexBuilder.IpWildcardRegex(_startIP.get(this))
             } else {
-
                 regex = regexBuilder.IpRangeRegex(_startIP.get(this), _endIP.get(this))
             }
-
-            regex = new RegExp(`^${regex}$`);
         }
 
+        regex = new RegExp(`^${regex}$`);
         _regex.set(this, regex);
     }
 };
