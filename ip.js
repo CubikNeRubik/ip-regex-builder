@@ -65,6 +65,22 @@ module.exports = class IP {
                 throw new Error('End IP of the range is not valid');
             }
 
+            const startBytes = startIP.split('.');
+            const endBytes = endIP.split('.');
+
+            for(let i = 0; i < 4; i++){
+                if(+startBytes[i] < +endBytes[i]){
+                    break;
+                }
+
+                if(+startBytes[i] > +endBytes[i]){
+                    const temp = startIP;
+                    startIP = endIP;
+                    endIP = temp;
+                    break;
+                }
+            }
+
             _isWildCard.set(this, false);
             _isRange.set(this, startIP !== endIP);
 
