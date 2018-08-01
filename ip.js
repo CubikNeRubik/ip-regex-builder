@@ -1,3 +1,6 @@
+const regexBuilder = require('./util/regexBuilder');
+
+
 let _startIP = new WeakMap();
 let _endIP = new WeakMap();
 
@@ -26,7 +29,7 @@ module.exports = class IP {
         let result = _startIP.get(this);
         const endIP = _endIP.get(this);
 
-        if(endIP){
+        if(this.isRange && !this.isWildcard){
             result += ' - ' + endIP;
         }
 
@@ -127,7 +130,7 @@ module.exports = class IP {
                 }
             } else {
 
-                regex = IpRangeRegex(_startIP.get(this), _endIP.get(this))
+                regex = regexBuilder.IpRangeRegex(_startIP.get(this), _endIP.get(this))
             }
 
             regex = new RegExp(`^${regex}$`);
@@ -136,106 +139,3 @@ module.exports = class IP {
         _regex.set(this, regex);
     }
 };
-
-function IpRangeRegex(startIP, endIP){
-
-    let RegEx = "";
-
-    let start = startIP.split(".");
-    let end = endIP.split(".");
-
-    let minAddress = "";
-    let maxAddress = "";
-    for(var j = 0; j < start.length - 1; j++){
-        minAddress += "0.";
-        maxAddress += "255.";
-    }
-
-    // slice last dot
-    minAddress = minAddress.slice(0, minAddress.length - 1);
-    maxAddress = maxAddress.slice(0, maxAddress.length - 1);
-
-
-    //get address without first byte
-    const minorStart = startIP.slice(startIP.indexOf(".") + 1, startIP.length);
-    const minorEnd   = endIP.slice(endIP.indexOf(".") + 1, endIP.length);
-
-    if(start.length === 1) {
-        // if it is last bytes
-        if(start[0] === end[0]){
-            // and they are same return byte
-            return start[0];
-        } else {
-            // and they are different generate RegEx for range
-            return "(" + NumberRangeRegEx(start[0],end[0]) + ")";
-        }
-    } else {
-        // if it is not last bytes generate in recursion
-        if(start[0] === end[0]){
-            // if first bytes same
-            return start[0] + "\\." + IpRangeRegex(minorStart, minorEnd);
-        } else {
-            // if first bytes different
-            if(start[1] === "0" && end[1] === "255"){
-                return "(" + NumberRangeRegEx(start[0],end[0]) + ")\\." + IpRangeRegex(minorStart, minorEnd);
-            }
-
-            if(start[1] !== "0" && end[1] !== "255"){
-                if(Math.abs(start[0] - end[0]) === 1){
-                    RegEx += "(" + start[0] + "\\." + IpRangeRegex(minorStart, maxAddress);
-                    RegEx += "|" + end[0] + "\\." + IpRangeRegex(minAddress, minorEnd) + ")";
-                    return RegEx;
-                } else {
-                    RegEx += "(" + start[0] + "\\." + IpRangeRegex(minorStart, maxAddress);
-                    RegEx += "|(" + IpRangeRegex( (+start[0] + 1) + "." + minAddress, (+end[0] - 1) + "." + maxAddress) + ")";
-                    RegEx += "|" + end[0] + "\\." + IpRangeRegex(minAddress, minorEnd) + ")";
-                    return RegEx;
-                }
-            }
-
-            // if(start[1] !== "0"){
-            //     RegEx += "(" + start[0] + "\\." + IpRangeRegex(minorStart, maxAddress);
-            //     RegEx += "|" + IpRangeRegex((+start[0] + 1) + "." + minAddress, end[0] + "." + maxAddress) + ")";
-            //     return RegEx;
-            // }
-            // if(end[1] !== "255"){
-            //     RegEx += "(" + IpRangeRegex(start[0] + "." + minAddress, (end[0] - 1) + "." + maxAddress);
-            //     RegEx += "|" + end[0] + "\\." + IpRangeRegex(minAddress, maxAddress) + ")";
-            //     return RegEx;
-            // }
-        }
-    }
-
-}
-
-function NumberRangeRegEx(a,b){
-    if(a*1 > b*1){
-        var temp;
-        temp = a;
-        a = b;
-        b = temp;
-    }
-    if(a == b) return a;
-    else if(a.charAt(0) == b.charAt(0) && a.length == b.length && a.length == 3)
-        return a.charAt(0) + "(" + NumberRangeRegEx(a.slice(1, a.length), b.slice(1, b.length)) + ")";
-    else if(a.length == b.length && a.length == 3)
-        return a.charAt(0) + "(" + NumberRangeRegEx(a.slice(1, a.length), "99") + ")|" + NumberRangeRegEx((a.charAt(0) * 1 + 1).toString() + "00", b);
-    else if(b.length == 3)
-        return NumberRangeRegEx(a, "99") + "|" + NumberRangeRegEx("100", b);
-    else if(a.charAt(0) == b.charAt(0) && a.length == b.length && a.length == 2)
-        return a.charAt(0) + range(a.charAt(1), b.charAt(1));
-    else if(a.length == b.length && a.charAt(1) == "0" && b.charAt(1) == "9" && a.length == 2)
-        return range(a.charAt(0), b.charAt(0)) + range(a.charAt(1), b.charAt(1));
-    else if(a.length == b.length && a.charAt(1) != "0" && a.length == 2)
-        return NumberRangeRegEx(a, a.charAt(0) + "9") + "|" + NumberRangeRegEx((a.charAt(0) * 1 + 1).toString() + "0", b);
-    else if(a.length == b.length && b.charAt(1) != "9" && b.length == 2)
-        return NumberRangeRegEx(a, (b.charAt(0) * 1 - 1).toString() + "9") + "|" + NumberRangeRegEx(b.charAt(0) + "0", b);
-    else if(a.length == 1 && b.length==1)
-        return range(a, b);
-    else if(a.length == 1)
-        return range(a, "9") + "|" + NumberRangeRegEx("10", b);
-}
-
-function range(a, b){
-    return "[" + a + "-" + b + "]";
-}
