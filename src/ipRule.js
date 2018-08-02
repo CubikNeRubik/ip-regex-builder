@@ -1,5 +1,5 @@
 import * as regexBuilder from './util/regexBuilder';
-import {IP_REGEX, WILDCARD_REGEX} from './constants';
+import {IP_REGEX_STRICT, WILDCARD_REGEX_STRICT} from './constants';
 
 // private
 let _startIP = new WeakMap();
@@ -9,11 +9,11 @@ let _isWildCard = new WeakMap();
 let _isRange = new WeakMap();
 let _regex = new WeakMap();
 
-const ipRegex = new RegExp(IP_REGEX);
-const wildcardRegex = new RegExp(WILDCARD_REGEX);
+// private static
+const ipRegex = new RegExp(IP_REGEX_STRICT);
+const wildcardRegex = new RegExp(WILDCARD_REGEX_STRICT);
 
-
-export default class IP {
+export default class IpRule {
 
     get value() {
 
