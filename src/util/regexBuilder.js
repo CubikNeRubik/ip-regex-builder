@@ -1,11 +1,6 @@
-export {
-    IpRangeRegex,
-    IpWildcardRegex
-};
+import {BYTE_REGEXP} from '../constants'
 
-const BYTE_REGEXP = '([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])';
-
-function IpWildcardRegex(wildcardIP){
+export function IpWildcardRegex(wildcardIP){
 
     const bytes = wildcardIP.split(".");
     let regex = '';
@@ -32,7 +27,7 @@ function IpWildcardRegex(wildcardIP){
     return regex;
 }
 
-function IpRangeRegex(startIP, endIP){
+export function IpRangeRegex(startIP, endIP){
 
     let RegEx = "";
 

@@ -1,22 +1,13 @@
 import * as regexBuilder from './util/regexBuilder';
+import {IP_REGEX, WILDCARD_REGEX} from './constants';
 
-
+// private
 let _startIP = new WeakMap();
 let _endIP = new WeakMap();
 
 let _isWildCard = new WeakMap();
 let _isRange = new WeakMap();
 let _regex = new WeakMap();
-
-const BYTE_REGEXP = '([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])';
-const IP_REGEX = `^(${BYTE_REGEXP}\\.){3}${BYTE_REGEXP}$`;
-
-// Wildcards
-const FIRST_ORDER_WILDCARD_REGEX    = `((${BYTE_REGEXP}\\.){0,3}(\\*))`;
-const SECOND_ORDER_WILDCARD_REGEX   = `((${BYTE_REGEXP}\\.){2}(\\*)(\\.\\*)?)`;
-const THIRD_ORDER_WILDCARD_REGEX    = `((${BYTE_REGEXP}\\.)(\\*)(\\.\\*\\.\\*)?)`;
-const FULL_WILDCARD_REGEX           = `((\\*)(\\.\\*\\.\\*\\.\\*)?)`;
-const WILDCARD_REGEX                = `^${FIRST_ORDER_WILDCARD_REGEX}|${SECOND_ORDER_WILDCARD_REGEX}|${THIRD_ORDER_WILDCARD_REGEX}|${FULL_WILDCARD_REGEX}$`;
 
 const ipRegex = new RegExp(IP_REGEX);
 const wildcardRegex = new RegExp(WILDCARD_REGEX);
