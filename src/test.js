@@ -65,13 +65,13 @@ try{
     console.log(3, err);
 }
 
-try{
-    let ip = new IP('*');
-    console.log(ip.value);
-    console.log(ip.regex);
-} catch (err) {
-    console.log(3, err);
-}
+// try{
+//     let ip = new IP('*');
+//     console.log(ip.value);
+//     console.log(ip.regex);
+// } catch (err) {
+//     console.log(3, err);
+// }
 
 // try{
 //     let ip = new IP('192.168.0.1', '192.168.0.266');
