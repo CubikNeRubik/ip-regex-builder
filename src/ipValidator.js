@@ -9,8 +9,8 @@ const wildcardRegexStrict = new RegExp(WILDCARD_REGEX_STRICT);
 /**
  *
  * @param ip        {string}  - ip for validation
- * @param option?    {number}  - type of validation (0 (default) - ip only, 1 - wildcard ip, 2 - both)
- * @param isStrict?  {boolean} - is strict validation
+ * @param option?   {number}  - type of validation (0 (default) - ip only, 1 - wildcard ip, 2 - both)
+ * @param isStrict? {boolean} - is strict validation
  * @returns {boolean}
  */
 export function validateIPv4(ip, option = 0, isStrict = false){
