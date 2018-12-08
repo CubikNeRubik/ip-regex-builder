@@ -2,7 +2,7 @@
   "name": "ip-regex",
   "version": "1.0.0",
   "description": "",
-  "main": "src/ip.js",
+  "main": "src/index.js",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
