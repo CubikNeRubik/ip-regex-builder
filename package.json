@@ -1,6 +1,6 @@
 {
   "name": "ip-regex-builder",
-  "version": "0.0.2",
+  "version": "0.0.3-0",
   "description": "Regular expression builder for validation of IP ranges. Support single IP, wildcards and ranges. IPv4 only.",
   "main": "src/index.js",
   "keywords": [
