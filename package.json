@@ -1,8 +1,9 @@
 {
   "name": "ip-regex-builder",
   "version": "0.0.2",
-  "description": "",
+  "description": "Regular expression builder for validation of IP ranges. Support single IP, wildcards and ranges. IPv4 only.",
   "main": "src/index.js",
+  "keywords": ["ip", "regex", "regexp", "regular expression", "regular expression builder", "ip validation", "ip wildcards", "ip ranges", "ipv4"],
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
