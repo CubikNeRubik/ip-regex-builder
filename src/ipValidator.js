@@ -1,5 +1,7 @@
 import {IP_REGEX, IP_REGEX_STRICT, WILDCARD_REGEX, WILDCARD_REGEX_STRICT} from "./constants";
 
+// TODO: need some refactoring
+
 // private static
 const ipRegex = new RegExp(IP_REGEX);
 const ipRegexStrict = new RegExp(IP_REGEX_STRICT);

@@ -1,6 +1,8 @@
 import * as regexBuilder from './util/regexBuilder';
 import {IP_REGEX_STRICT, WILDCARD_REGEX_STRICT} from './constants';
 
+// TODO: need some refactoring
+
 // private
 let _startIP = new WeakMap();
 let _endIP = new WeakMap();

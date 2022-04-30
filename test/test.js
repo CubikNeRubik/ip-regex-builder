@@ -1,5 +1,7 @@
 const {IpRule: IP, validateIPv4}  = require('./min/ip.min.js');
 
+// TODO: add jest tests here
+
 try{
     let ip1 = new IP('192.168.1.1', '192.168.0.7');
     let ip2 = new IP('192.168.0.7', '192.168.1.1');
