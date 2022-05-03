@@ -20,15 +20,17 @@
     "rollup": "^0.63.5",
     "rollup-plugin-babel": "^3.0.7",
     "rollup-plugin-uglify": "^4.0.0",
-    "uglify-js": "^3.4.6"
+    "uglify-js": "^3.4.6",
+    "semantic-release": "^19.0.2"
   },
   "scripts": {
     "build": "rollup -c",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CubikNeRubik/ip-regex.git"
+    "url": "https://github.com/CubikNeRubik/ip-regex.git"
   },
   "author": "",
   "license": "ISC",

@@ -1,0 +1,5 @@
+{
+    "branches": ["master", "semantic-release"],
+    "ci": false,
+    "dryRun": true
+}
